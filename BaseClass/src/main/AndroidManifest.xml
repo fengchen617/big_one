@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bawei6.baseclass" />
+    package="com.bawei6.baseclass" >
+
+    <application>
+        <activity android:name=".ui.BaseMvpActivity" />
+    </application>
+</manifest>

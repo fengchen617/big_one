@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.bawei6.bigone.custom.Custom_Bottom
+        android:id="@+id/main_bb"
+        android:layout_margin="30dp"
+        app:app_img_one="@mipmap/c_a"
+        app:app_img_two="@mipmap/c_b"
+        app:app_img_five="@mipmap/c_e"
+        app:app_img_four="@mipmap/c_d"
+        app:app_img_three="@mipmap/c_c"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="100dp"/>
+</FrameLayout>

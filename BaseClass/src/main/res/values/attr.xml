@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TitleBar">
+        <attr name="attr_base_title_bar_img_left" format="reference"/>
+        <attr name="attr_base_title_bar_text" format="reference"/>
+        <attr name="attr_base_title_bar_img_center" format="reference"/>
+        <attr name="attr_base_title_bar_img_right" format="reference"/>
+    </declare-styleable>
+</resources>

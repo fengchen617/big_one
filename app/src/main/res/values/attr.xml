@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Custom_Bottom">
+        <attr name="app_img_one" format="reference"/>
+        <attr name="app_img_two" format="reference"/>
+        <attr name="app_img_three" format="reference"/>
+        <attr name="app_img_four" format="reference"/>
+        <attr name="app_img_five" format="reference"/>
+    </declare-styleable>
+</resources>

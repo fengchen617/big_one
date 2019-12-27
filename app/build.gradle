@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+//    sourceSets {main{jniLibs.srcDirs=['libs'] }}/
     defaultConfig {
         applicationId "com.bawei6.bigone"
         minSdkVersion 15
