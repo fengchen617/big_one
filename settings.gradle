@@ -1,0 +1,2 @@
+include ':app', ':BaseClass'
+rootProject.name='BigOne'
