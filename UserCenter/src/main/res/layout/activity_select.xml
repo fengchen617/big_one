@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SelectActivity">
+
+   <ImageView
+       android:src="@drawable/title"
+       android:scaleType="fitXY"
+       android:id="@+id/select_title_img"
+       android:layout_width="150dp"
+       android:layout_height="150dp"
+       android:layout_marginTop="40dp"
+       android:layout_marginLeft="130dp"/>
+    <include layout="@layout/select_zh_item"/>
+    <include layout="@layout/select_mm_item"/>
+    <Button
+        android:id="@+id/select_login"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="登录"
+        android:background="@drawable/select_button_login"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/select_register"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:text="立即注册"
+        android:gravity="right"
+        android:textColor="@android:color/holo_blue_light"/>
+</LinearLayout>

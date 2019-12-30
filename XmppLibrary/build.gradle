@@ -6,11 +6,20 @@ android {
 
 
     defaultConfig {
+        multiDexEnabled true
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -36,4 +45,6 @@ dependencies {
     api 'org.igniterealtime.smack:smack-android-extensions:4.2.0'
     api 'org.igniterealtime.smack:smack-android:4.2.0'
     implementation project(':CommonLibrary')
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+
 }

@@ -5,6 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.bawei6.baseclass.api.TokenApi;
+import com.bawei6.baseclass.bean.TokenBean;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * @author fengchen
  * @date 2019/12/28.
- * @description：
+ * @description：网络请求
  */
 public class RetrofitUtils {
     private static volatile RetrofitUtils instance;
@@ -92,7 +95,16 @@ public class RetrofitUtils {
                 Request request = chain.request();
                 //拦截响应
                 Response response = chain.proceed(request);
-                return null;
+
+                //添加头信息
+                Request.Builder requestBuilder = request.newBuilder()
+                        .addHeader("Content-Type", "application-json")
+                        .addHeader("charest", "utf-8");
+                //判断响应码
+                if (response.code() == 401) {
+                    requestBuilder.addHeader("Authorization", "bearer " + requestToken());
+                }
+                return chain.proceed(requestBuilder.build());
             }
         };
     }
@@ -102,7 +114,14 @@ public class RetrofitUtils {
      * @return 请求到的token
      */
     private String requestToken() {
-
+        try {
+            TokenBean body = mRetrofit.create(TokenApi.class)
+                    .getToken("password", "0f16b1ad13a11a1421d212d1961081c91ce1ee1901c01cc1", "")
+                    .execute().body();
+            return body.getAccess_token();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "";
     }
 
@@ -116,4 +135,6 @@ public class RetrofitUtils {
     public <T> T create(Class<T> clazz) {
         return mRetrofit.create(clazz);
     }
+
+
 }

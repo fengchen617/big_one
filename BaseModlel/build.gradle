@@ -6,17 +6,27 @@ android {
     sourceSets {main{jniLibs.srcDirs=['libs'] }}
 
     defaultConfig {
+        multiDexEnabled true
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
         release {
+            multiDexEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -67,4 +77,11 @@ dependencies {
     api 'com.amap.api:location:latest.integration'
     //搜索功能
     api 'com.amap.api:search:latest.integration'
+
+    //methods: 68680 > 65536
+    api 'com.android.support:multidex:1.0.3'
+
+    //arouter跳转
+    api('com.alibaba:arouter-api:1.4.1')
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 }

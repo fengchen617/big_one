@@ -3,6 +3,7 @@ package com.bawei6.bigone;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -15,11 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.bawei6.baseclass.net.ValPool;
 import com.bawei6.baseclass.ui.BaseActivity;
 import com.bawei6.bigone.custom.Custom_Bottom;
+import com.bawei6.usercenter.SelectActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
  * @author fengchen
  * @date 2019.12.27
  */
+
 public class MainActivity extends BaseActivity {
     MapView mapView;
     private MapView map;
@@ -92,10 +97,16 @@ public class MainActivity extends BaseActivity {
         d_item_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //打开本地相册
+               //打开本地相册
                 Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_PICK);
-                startActivityForResult(intent, 101);
+                if (Build.VERSION.SDK_INT<19){
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.setType("image/*");
+                }else {
+                    intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                    startActivityForResult(intent,101);
+                }
             }
         });
         //关闭抽屉
@@ -147,13 +158,17 @@ public class MainActivity extends BaseActivity {
                 drawable_ = imageView_three.getDrawable();
                 imageView_three.setImageDrawable(drawable);
                 imageView_two.setImageDrawable(drawable_);
+
             }
         });
 
         imageView_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ARouter.getInstance().build("/bawei/selectActivity")
+                        .navigation();
+                Intent intent = new Intent(MainActivity.this, SelectActivity.class);
+                startActivity(intent);
             }
         });
 
