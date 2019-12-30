@@ -4,8 +4,8 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.1'
         
@@ -13,7 +13,37 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
+plugins {
+    id "calces.appconfig" version "1.0.11"
+}
+appConfig{
+    //debug测试模式->开发阶段为true->各个子模块单独运行测试
+    debugEnable true
+    //组件化架构中，第三层不同业务路基组件
+    apps{
+        app{
+            modules ':UserCenter',':ActivityModule'
+        }
+    }
+    modules{
+        //新闻资讯
+        UserCenter {
+            name ':UserCenter'
+//            mainActivity ".MainActivity"
+            applicationId "com.bawei6.usercenter"
+            isRunAlone false
+            //是否可以单独运行
+        }
+        //用户
+        ActivityModule {
+            name ':ActivityModule'
+//            mainActivity ".MainActivity"
+            applicationId "com.bawei6.activitymodule"
+            isRunAlone false
+            //是否可以单独运行
+        }
+    }
+}
 allprojects {
     repositories {
         google()

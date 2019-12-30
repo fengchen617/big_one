@@ -7,10 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.bawei6.baseclass.ui.StartView
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+        <!--第一部分：主布局-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.bawei6.baseclass.ui.StartView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <include layout="@layout/main_item"/>
+        </LinearLayout>
 
-    <include layout="@layout/main_item"/>
+        <!--第二部分：抽屉  android:layout_gravity="left"-->
+        <LinearLayout
+            android:layout_gravity="left"
+            android:layout_width="300dp"
+            android:background="@android:color/white"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/drawer_item"/>
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>

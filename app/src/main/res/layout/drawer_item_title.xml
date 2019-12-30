@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#A3CCA0">
+    <ImageView
+        android:layout_margin="@dimen/dp_10"
+        android:id="@+id/d_item_title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <ImageView
+        android:id="@+id/d_item_camera"
+        android:layout_toRightOf="@+id/d_item_title"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_action_camera"/>
+    <TextView
+        android:id="@+id/d_title_name"
+        android:layout_below="@+id/d_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="风尘"
+        android:gravity="center"/>
+    <EditText
+        android:id="@+id/d_title_ex"
+        android:layout_below="@+id/d_title_name"
+        android:layout_centerHorizontal="true"
+        android:hint="写一段简短的自我介绍"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

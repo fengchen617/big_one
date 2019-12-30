@@ -1,15 +1,28 @@
 package com.bawei6.bigone;
 
-import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
+import com.bawei6.baseclass.net.ValPool;
 import com.bawei6.baseclass.ui.BaseActivity;
 import com.bawei6.bigone.custom.Custom_Bottom;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 
 /**
  * @author fengchen
@@ -19,8 +32,20 @@ public class MainActivity extends BaseActivity {
     MapView mapView;
     private MapView map;
     private Custom_Bottom main_bb;
+    //接收自定义View中的图片
     private Drawable drawable;
     private Drawable drawable_;
+    private ImageView main_title_img;
+    private SearchView main_title_search;
+    private ImageView main_sao_img;
+    private DrawerLayout drawer_layout;
+    //抽屉中的
+    private ImageView d_item_title;
+    private ImageView d_item_camera;
+    private TextView d_title_name;
+    private EditText d_title_ex;
+    //抽屉中的X(关闭)
+    private ImageView drawer_close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +60,69 @@ public class MainActivity extends BaseActivity {
         if (aMap == null) {
             aMap = mapView.getMap();
         }
-
     }
 
     private void initView() {
         map = (MapView) findViewById(R.id.map);
         main_bb = (Custom_Bottom) findViewById(R.id.main_bb);
+        //主页图片的切换(自定义的)
         initimg();
+        main_title_img = (ImageView) findViewById(R.id.main_title_img);
+        main_title_search = (SearchView) findViewById(R.id.main_title_search);
+        main_sao_img = (ImageView) findViewById(R.id.main_sao_img);
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //初始化主页的TITLE
+        init_title();
+        d_item_title = (ImageView) findViewById(R.id.d_item_title);
+        d_item_camera = (ImageView) findViewById(R.id.d_item_camera);
+        d_title_name = (TextView) findViewById(R.id.d_title_name);
+        d_title_ex = (EditText) findViewById(R.id.d_title_ex);
+        drawer_close = (ImageView) findViewById(R.id.drawer_close);
+        //初始化抽屉中的控件
+        init_drawer();
+
     }
 
+    //抽屉中的
+    private void init_drawer() {
+        //加载头像
+        Glide.with(this).load(ValPool.Main_Title_Img)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(d_item_title);
+        d_item_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //打开本地相册
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_PICK);
+                startActivityForResult(intent, 101);
+            }
+        });
+        //关闭抽屉
+        drawer_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer_layout.closeDrawer(Gravity.LEFT);
+            }
+        });
+    }
+
+    //初始化主页的TITLE
+    private void init_title() {
+        //加载头像
+        Glide.with(this).load(ValPool.Main_Title_Img)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(main_title_img);
+        //打开抽屉
+        main_title_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer_layout.openDrawer(Gravity.LEFT);
+            }
+        });
+    }
+
+    //主页图片的切换
     private void initimg() {
         final ImageView imageView_one = main_bb.getimg_one();
         final ImageView imageView_two = main_bb.getimg_two();
@@ -98,4 +177,18 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            // 从相册返回的数据
+            if (data != null) {
+                // 得到图片的全路径
+                Uri uri = data.getData();
+                main_title_img.setImageURI(uri);
+            }
+        }
+    }
+
 }

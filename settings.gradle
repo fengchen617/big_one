@@ -1,2 +1,2 @@
-include ':app', ':BaseClass'
+include ':app', ':BaseModlel', ':UserCenter', ':ActivityModule', ':XmppLibrary', ':CommonLibrary'
 rootProject.name='BigOne'
