@@ -1,4 +1,4 @@
-package com.bawei6.usercenter;
+package com.bawei6.usercenter.inituser;
 
 import com.bawei6.baseclass.bean.UserInfoBean;
 import com.bawei6.baseclass.ui.BaseActivity;
@@ -9,7 +9,7 @@ import com.bawei6.usercenter.mvp.contract.Contract;
 /**
  * @author fengchen
  * @date 2019/12/30.
- * @description：
+ * @description：重新View的方法，避免代码重复
  */
 public class UserActivity extends BaseActivity implements Contract.View {
     @Override

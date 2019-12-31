@@ -24,6 +24,7 @@ import com.bawei6.baseclass.net.ValPool;
 import com.bawei6.baseclass.ui.BaseActivity;
 import com.bawei6.bigone.custom.Custom_Bottom;
 import com.bawei6.usercenter.SelectActivity;
+import com.bawei6.usercenter.chat.AddressBook_Activity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -148,6 +149,9 @@ public class MainActivity extends BaseActivity {
                 drawable_ = imageView_three.getDrawable();
                 imageView_three.setImageDrawable(drawable);
                 imageView_one.setImageDrawable(drawable_);
+                Intent intent = new Intent(MainActivity.this, AddressBook_Activity.class);
+                startActivity(intent);
+
             }
         });
 
@@ -165,7 +169,7 @@ public class MainActivity extends BaseActivity {
         imageView_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build("/bawei/selectActivity")
+                ARouter.getInstance().build("/usercenter/selectActivity")
                         .navigation();
                 Intent intent = new Intent(MainActivity.this, SelectActivity.class);
                 startActivity(intent);

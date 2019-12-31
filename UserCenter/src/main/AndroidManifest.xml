@@ -3,8 +3,10 @@
     package="com.bawei6.usercenter">
 
     <application>
-        <activity android:name=".AddActivity"></activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".chat.AddressBook_Activity"></activity>
+        <activity android:name=".inituser.FindActivity" />
+        <activity android:name=".chat.AddActivity" />
+        <activity android:name=".inituser.RegisterActivity" />
         <activity android:name=".SelectActivity" />
     </application>
 

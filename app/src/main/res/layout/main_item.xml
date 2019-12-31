@@ -14,11 +14,11 @@
     <com.bawei6.bigone.custom.Custom_Bottom
         android:id="@+id/main_bb"
         android:layout_margin="30dp"
-        app:app_img_one="@mipmap/c_a"
-        app:app_img_two="@mipmap/c_b"
-        app:app_img_five="@mipmap/c_e"
-        app:app_img_four="@mipmap/c_d"
-        app:app_img_three="@mipmap/c_c"
+        app:app_img_one="@drawable/ac"
+        app:app_img_two="@drawable/ad"
+        app:app_img_five="@drawable/aa"
+        app:app_img_four="@drawable/ab"
+        app:app_img_three="@drawable/ae"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:layout_height="100dp"/>

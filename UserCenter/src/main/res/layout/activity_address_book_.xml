@@ -5,19 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".chat.AddActivity">
-
+    tools:context=".chat.AddressBook_Activity">
     <com.bawei6.baseclass.ui.TitleBar
         app:attr_base_title_bar_img_left="@drawable/ic_user_close"
         app:attr_base_title_bar_text="@string/add_name"
-        android:layout_width="400dp"
-        android:layout_height="50dp"
-        android:background="#3DB842"/>
+        app:attr_base_title_bar_img_right="@drawable/ic_user_lainxi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/address_main_re"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <com.flyco.tablayout.CommonTabLayout
         app:tl_textSelectColor="@android:color/holo_red_light"
         app:tl_textUnselectColor="@android:color/black"
-        android:id="@+id/add_main_common"
+        android:id="@+id/address_main_common"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
+    <FrameLayout
+        android:id="@+id/address_main_f"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

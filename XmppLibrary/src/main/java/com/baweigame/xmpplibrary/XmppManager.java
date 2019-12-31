@@ -63,8 +63,8 @@ public class XmppManager {
     private XmppManager(){
         //连接IM服务器
         connect();
-
     }
+
     public static XmppManager getInstance(){
         if (instance==null){
             synchronized (XmppManager.class){

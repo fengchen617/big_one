@@ -17,6 +17,7 @@
        android:layout_marginLeft="130dp"/>
     <include layout="@layout/select_zh_item"/>
     <include layout="@layout/select_mm_item"/>
+    <include layout="@layout/select_mimaactivity"/>
     <Button
         android:id="@+id/select_login"
         android:layout_marginTop="20dp"
@@ -25,13 +26,7 @@
         android:text="登录"
         android:background="@drawable/select_button_login"
         android:layout_gravity="center_horizontal"/>
-    <TextView
-        android:id="@+id/select_register"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_40"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:text="立即注册"
-        android:gravity="right"
-        android:textColor="@android:color/holo_blue_light"/>
+
+    <include layout="@layout/select_post"/>
+
 </LinearLayout>

@@ -69,7 +69,7 @@ public class TitleBar extends LinearLayout {
         }
         //给text设置
         if(text!=0){
-            textView.setText(img_left);
+            textView.setText(text);
         }
         //添加到布局上
         this.addView(view);
