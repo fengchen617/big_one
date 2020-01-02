@@ -1,5 +1,8 @@
 package com.bawei6.usercenter.adapter;
 
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 
 import com.bawei6.usercenter.R;
@@ -43,7 +46,9 @@ public class AddressBookAdapter extends BaseQuickAdapter<AddressBookBean, BaseVi
                 break;
             //姓名与电话号布局
             case 1:
-                helper.setText(R.id.address_phone,item.getName()+item.getPhone());
+                helper.setText(R.id.address_name,item.getName());
+                helper.setText(R.id.address_phone,item.getPhone());
+                helper.addOnClickListener(R.id.address_item_phone_jia);
                 break;
                 default:break;
         }

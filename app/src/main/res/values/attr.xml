@@ -7,4 +7,7 @@
         <attr name="app_img_four" format="reference"/>
         <attr name="app_img_five" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="TimeView">
+
+    </declare-styleable>
 </resources>

@@ -15,7 +15,7 @@ import io.reactivex.Observer;
 public interface Contract {
     interface Model {
         void getmodellogindata(String username, String password, Observer<UserInfoBean<LoginBean>> observer);
-        void getmodelredata(String phoneusername,String password,Observer<UserInfoBean<RegisterBean>> observer);
+        void getmodelredata(String id,String phoneusername,String password,Observer<UserInfoBean<RegisterBean>> observer);
     }
 
     interface View {
@@ -25,7 +25,7 @@ public interface Contract {
 
     abstract  class Presenter<V extends View,M extends Model> extends BasePresenter {
         public abstract void getlogindata(String username, String password);
-        public abstract void getredata(String phoneusername,String password);
+        public abstract void getredata(String id,String phoneusername,String password);
         public abstract void initview(Contract.View view);
     }
 }

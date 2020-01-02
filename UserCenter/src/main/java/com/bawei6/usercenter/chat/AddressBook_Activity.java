@@ -1,11 +1,16 @@
 package com.bawei6.usercenter.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bawei6.baseclass.net.RetrofitUtils;
 import com.bawei6.baseclass.ui.BaseActivity;
+import com.bawei6.baseclass.ui.TitleBar;
 import com.bawei6.usercenter.R;
 import com.bawei6.usercenter.bean.AddressCommonBean;
 import com.bawei6.usercenter.chat.fragment.AddressBook_Fragment;
@@ -26,6 +31,7 @@ public class AddressBook_Activity extends BaseActivity {
     private CommonTabLayout address_main_common;
     private FrameLayout address_main_f;
     private ArrayList<CustomTabEntity> list_common = new ArrayList<>();
+    private TitleBar addressbook_titlebar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,29 @@ public class AddressBook_Activity extends BaseActivity {
         address_main_re = (RecyclerView) findViewById(R.id.address_main_re);
         address_main_common = (CommonTabLayout) findViewById(R.id.address_main_common);
         address_main_f = (FrameLayout) findViewById(R.id.address_main_f);
-
+        addressbook_titlebar = (TitleBar) findViewById(R.id.addressbook_titlebar);
+        onclickbar();
         initdata();
+    }
+
+    private void onclickbar() {
+        //TITLEBar的左方图片的处理
+        ImageView imageView_left = addressbook_titlebar.getImageView_left();
+        imageView_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //TITLEBar的you方图片的处理
+        ImageView imageView_right = addressbook_titlebar.getImageView_right();
+        imageView_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddressBook_Activity.this, AddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initdata() {
@@ -53,12 +80,12 @@ public class AddressBook_Activity extends BaseActivity {
         address_main_common.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                if(position==0){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f,new AddressBook_Fragment()).commit();
-                }else if(position==1){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f,new AddressBook_Fragment()).commit();
-                }else if(position==2){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f,new AddressBook_Fragment()).commit();
+                if (position == 0) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f, new AddressBook_Fragment()).commit();
+                } else if (position == 1) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f, new AddressBook_Fragment()).commit();
+                } else if (position == 2) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f, new AddressBook_Fragment()).commit();
                 }
             }
 

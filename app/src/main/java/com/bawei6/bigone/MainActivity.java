@@ -15,19 +15,24 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.bawei6.baseclass.net.ValPool;
 import com.bawei6.baseclass.ui.BaseActivity;
 import com.bawei6.bigone.custom.Custom_Bottom;
+import com.bawei6.bigone.time.TiemTextBean;
+import com.bawei6.bigone.time.TimeAdapter;
 import com.bawei6.usercenter.SelectActivity;
 import com.bawei6.usercenter.chat.AddressBook_Activity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
 
 /**
  * @author fengchen
@@ -53,6 +58,15 @@ public class MainActivity extends BaseActivity {
     //抽屉中的X(关闭)
     private ImageView drawer_close;
 
+    //时间轴的适配器
+    private TimeAdapter timeAdapter;
+    private ArrayList<TiemTextBean> list = new ArrayList<>();
+    private boolean iftime=false;
+    //    ValueAnimator valueAnimator;
+    //活动
+    private RecyclerView main_time_re;
+    private TextView main_time_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +80,20 @@ public class MainActivity extends BaseActivity {
         if (aMap == null) {
             aMap = mapView.getMap();
         }
+        //去掉地图右下角缩放按钮
+        aMap.getUiSettings().setZoomControlsEnabled(false);
     }
 
     private void initView() {
+        main_time_re = findViewById(R.id.main_time_re);
+        main_time_re.setLayoutManager(new LinearLayoutManager(this));
+        list.add(new TiemTextBean("第一次加载的第一个TextView", "第一次加载的第二个TextView", "第一次加载的第三个TextView"));
+        list.add(new TiemTextBean("第二次加载的第一个TextView", "第二次加载的第二个TextView", "第二次加载的第三个TextView"));
+        list.add(new TiemTextBean("第三次加载的第一个TextView", "第三次加载的第二个TextView", "第三次加载的第三个TextView"));
+
+        timeAdapter = new TimeAdapter(R.layout.time_item, list);
+        main_time_re.setAdapter(timeAdapter);
+        timeAdapter.notifyDataSetChanged();
         map = (MapView) findViewById(R.id.map);
         main_bb = (Custom_Bottom) findViewById(R.id.main_bb);
         //主页图片的切换(自定义的)
@@ -84,9 +109,23 @@ public class MainActivity extends BaseActivity {
         d_title_name = (TextView) findViewById(R.id.d_title_name);
         d_title_ex = (EditText) findViewById(R.id.d_title_ex);
         drawer_close = (ImageView) findViewById(R.id.drawer_close);
+
         //初始化抽屉中的控件
         init_drawer();
 
+        main_time_text = (TextView) findViewById(R.id.main_time_text);
+        main_time_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(iftime){
+                   main_time_re.setVisibility(View.VISIBLE);
+                   iftime=false;
+               }else {
+                   main_time_re.setVisibility(View.GONE);
+                   iftime=true;
+               }
+            }
+        });
     }
 
     //抽屉中的
@@ -98,15 +137,15 @@ public class MainActivity extends BaseActivity {
         d_item_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //打开本地相册
+                //打开本地相册
                 Intent intent = new Intent();
-                if (Build.VERSION.SDK_INT<19){
+                if (Build.VERSION.SDK_INT < 19) {
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     intent.setType("image/*");
-                }else {
+                } else {
                     intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                    startActivityForResult(intent,101);
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    startActivityForResult(intent, 101);
                 }
             }
         });
@@ -115,6 +154,22 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 drawer_layout.closeDrawer(Gravity.LEFT);
+            }
+        });
+
+        d_item_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                valueAnimator = ValueAnimator.ofInt(0, 3);
+//                valueAnimator.setDuration(2000);
+//                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                    @Override
+//                    public void onAnimationUpdate(ValueAnimator animation) {
+//                        int animatedValue = (int) animation.getAnimatedValue();
+//                        d_item_camera.setPadding(animatedValue, animatedValue, 300, 300);
+//                    }
+//                });
+//                valueAnimator.start();
             }
         });
     }
@@ -134,6 +189,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+
     //主页图片的切换
     private void initimg() {
         final ImageView imageView_one = main_bb.getimg_one();
@@ -151,7 +207,6 @@ public class MainActivity extends BaseActivity {
                 imageView_one.setImageDrawable(drawable_);
                 Intent intent = new Intent(MainActivity.this, AddressBook_Activity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -162,7 +217,6 @@ public class MainActivity extends BaseActivity {
                 drawable_ = imageView_three.getDrawable();
                 imageView_three.setImageDrawable(drawable);
                 imageView_two.setImageDrawable(drawable_);
-
             }
         });
 

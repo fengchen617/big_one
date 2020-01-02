@@ -50,8 +50,8 @@ public class Presenter extends Contract.Presenter {
     }
 
     @Override
-    public void getredata(String phoneusername, String password) {
-        model.getmodelredata(phoneusername,password,ob_re);
+    public void getredata(String id,String phoneusername, String password) {
+        model.getmodelredata(id,phoneusername,password,ob_re);
     }
 
     @Override

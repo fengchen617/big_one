@@ -1,11 +1,14 @@
 package com.bawei6.usercenter.chat;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bawei6.baseclass.ui.BaseActivity;
+import com.bawei6.baseclass.ui.TitleBar;
 import com.bawei6.usercenter.R;
 import com.bawei6.usercenter.bean.AddCommonBean;
-import com.bawei6.usercenter.chat.fragment.AddressBook_Fragment;
 import com.bawei6.usercenter.chat.fragment.add.Add_Preson_Fragment;
 import com.bawei6.usercenter.chat.fragment.add.Add_Qun_Fragment;
 import com.flyco.tablayout.CommonTabLayout;
@@ -20,9 +23,12 @@ import java.util.ArrayList;
  * @description：添加的功能
  */
 public class AddActivity extends BaseActivity {
-
+    //页面的切换
     private ArrayList<CustomTabEntity> list_common = new ArrayList<>();
     private CommonTabLayout add_main_common;
+    //头布局
+    private TitleBar add_titlebar;
+    private FrameLayout add_f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,9 @@ public class AddActivity extends BaseActivity {
     }
 
     private void initView() {
+        add_titlebar = (TitleBar) findViewById(R.id.add_titlebar);
         add_main_common = (CommonTabLayout) findViewById(R.id.add_main_common);
+        add_f = (FrameLayout) findViewById(R.id.add_f);
         initdata();
     }
 
@@ -43,10 +51,10 @@ public class AddActivity extends BaseActivity {
         add_main_common.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                if(position==0){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f,new Add_Preson_Fragment()).commit();
-                }else if(position==1){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.address_main_f,new Add_Qun_Fragment()).commit();
+                if (position == 0) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.add_f, new Add_Preson_Fragment()).commit();
+                } else if (position == 1) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.add_f, new Add_Qun_Fragment()).commit();
                 }
             }
 

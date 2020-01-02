@@ -2,4 +2,5 @@
     <string name="app_name">UserCenter</string>
     <string name="add_name"> 添加 </string>
     <string name="address_name"> 通讯录 </string>
+    <string name="phone_name"> 手机联系人 </string>
 </resources>

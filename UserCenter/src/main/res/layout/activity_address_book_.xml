@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".chat.AddressBook_Activity">
     <com.bawei6.baseclass.ui.TitleBar
+        android:id="@+id/addressbook_titlebar"
         app:attr_base_title_bar_img_left="@drawable/ic_user_close"
         app:attr_base_title_bar_text="@string/add_name"
         app:attr_base_title_bar_img_right="@drawable/ic_user_lainxi"

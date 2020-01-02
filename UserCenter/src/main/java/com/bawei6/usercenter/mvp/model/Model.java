@@ -32,9 +32,9 @@ public class Model implements Contract.Model {
     }
 
     @Override
-    public void getmodelredata(String phoneusername, String password, Observer<UserInfoBean<RegisterBean>> observer) {
+    public void getmodelredata(String id,String phoneusername, String password, Observer<UserInfoBean<RegisterBean>> observer) {
         RetrofitUtils.getInstance().create(RxApi.class)
-                .re_ob(new RegisterBean(1,phoneusername,password,"1","1","1","1","1",8,"1","1",1,1))
+                .re_ob(new RegisterBean(1,id,phoneusername,password,"1","1","1","1",8,"1","1",1,1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

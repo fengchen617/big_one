@@ -76,4 +76,21 @@ public class TitleBar extends LinearLayout {
         //回收
         typedArray.recycle();
     }
+
+    //返回TextView
+    public TextView gettext(){
+        return textView;
+    }
+
+    public ImageView getImageView_left(){
+        return imageView_left;
+    }
+
+    public ImageView getImageView_center(){
+        return imageView_center;
+    }
+
+    public ImageView getImageView_right(){
+        return imageView_right;
+    }
 }

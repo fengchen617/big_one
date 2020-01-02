@@ -49,6 +49,12 @@ public class SelectActivity extends UserActivity {
     //找回密码
     private TextView select_find;
 
+    //判断是否第一次登录
+    boolean selected;
+    boolean isflag;
+    //SP存储
+    SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +79,15 @@ public class SelectActivity extends UserActivity {
         select_mima_remember = (CheckBox) findViewById(R.id.select_mima_remember);
         select_mima_auto = (CheckBox) findViewById(R.id.select_mima_auto);
         select_find = (TextView) findViewById(R.id.select_find);
+        sp = getSharedPreferences("a", MODE_PRIVATE);
+         selected = select_mima_remember.isChecked();
+         isflag = sp.getBoolean("isflag", false);
+        String username = sp.getString("username", "");
+        String password = sp.getString("password", "");
+        select_ex_username.setText(username);
+        select_mm_password.setText(password);
+        select_mima_remember.setChecked(true);
+
         //登录
         onclick_login();
         //注册
@@ -125,9 +140,6 @@ public class SelectActivity extends UserActivity {
         select_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp = getSharedPreferences("a", MODE_PRIVATE);
-                boolean selected = select_mima_remember.isChecked();
-                boolean isflag = sp.getBoolean("isflag", false);
                 if (isflag) {
                     String username = sp.getString("username", "");
                     String password = sp.getString("password", "");

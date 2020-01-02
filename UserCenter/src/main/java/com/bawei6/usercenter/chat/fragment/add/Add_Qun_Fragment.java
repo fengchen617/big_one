@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bawei6.usercenter.R;
+
 /**
  * @author fengchen
  * @date 2019/12/31.
@@ -18,6 +20,11 @@ public class Add_Qun_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.add_preson_fragment_item, null);
+        initview(view);
+        return view;
+    }
+
+    private void initview(View view) {
     }
 }

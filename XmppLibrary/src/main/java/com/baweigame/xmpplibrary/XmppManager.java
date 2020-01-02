@@ -51,9 +51,7 @@ import java.util.Collection;
 import java.util.PropertyResourceBundle;
 
 public class XmppManager {
-
     private final String TAG=XmppManager.class.getSimpleName();
-
     /**
      * Xmpp Connection
      */
