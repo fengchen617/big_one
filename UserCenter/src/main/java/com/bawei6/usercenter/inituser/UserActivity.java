@@ -2,9 +2,13 @@ package com.bawei6.usercenter.inituser;
 
 import com.bawei6.baseclass.bean.UserInfoBean;
 import com.bawei6.baseclass.ui.BaseActivity;
+import com.bawei6.usercenter.bean.FindFriendBean;
 import com.bawei6.usercenter.bean.LoginBean;
 import com.bawei6.usercenter.bean.RegisterBean;
 import com.bawei6.usercenter.mvp.contract.Contract;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fengchen
@@ -19,6 +23,11 @@ public class UserActivity extends BaseActivity implements Contract.View {
 
     @Override
     public void register_data(UserInfoBean<RegisterBean> registerBeanUserInfoBean) {
+
+    }
+
+    @Override
+    public void find_data(UserInfoBean<List<FindFriendBean>> registerBeanUserInfoBean) {
 
     }
 }

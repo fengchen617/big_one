@@ -11,7 +11,7 @@
 
     <include layout="@layout/main_item_title"/>
     <TextView
-        android:background="@android:color/black"
+        android:background="#9A000000"
         android:textColor="#ffffff"
         android:id="@+id/main_time_text"
         android:layout_marginTop="360dp"

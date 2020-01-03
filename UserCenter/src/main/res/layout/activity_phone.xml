@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".chat.fragment.add.PhoneActivity">
+    tools:context=".msg.add.fragment.add.PhoneActivity">
     <com.bawei6.baseclass.ui.TitleBar
         app:attr_base_title_bar_img_left="@drawable/ic_user_close"
         app:attr_base_title_bar_text="@string/phone_name"

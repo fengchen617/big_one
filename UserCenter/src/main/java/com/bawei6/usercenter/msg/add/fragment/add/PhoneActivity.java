@@ -1,7 +1,6 @@
-package com.bawei6.usercenter.chat.fragment.add;
+package com.bawei6.usercenter.msg.add.fragment.add;
 
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -13,34 +12,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bawei6.baseclass.Utils.ThreadUtils;
 import com.bawei6.baseclass.ui.TitleBar;
 import com.bawei6.usercenter.R;
-import com.bawei6.usercenter.SelectActivity;
 import com.bawei6.usercenter.adapter.AddressBookAdapter;
 import com.bawei6.usercenter.bean.AddressBookBean;
-import com.bawei6.usercenter.chat.AddActivity;
-import com.bawei6.usercenter.inituser.RegisterActivity;
 import com.bawei6.usercenter.inituser.UserActivity;
 import com.bawei6.usercenter.mvp.presenter.Presenter;
-import com.baweigame.xmpplibrary.XmppManager;
-import com.baweigame.xmpplibrary.contract.IXmppFriend;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
-import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smackx.vcardtemp.VCardManager;
-import org.jivesoftware.smackx.vcardtemp.packet.VCard;
-import org.jxmpp.jid.impl.JidCreate;
-import org.jxmpp.stringprep.XmppStringprepException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +38,7 @@ public class PhoneActivity extends UserActivity {
     Presenter presenter=new Presenter();
     //数据源
     private List<AddressBookBean> list = new ArrayList<>();
+    public static List<AddressBookBean> addressbook_all = new ArrayList<>();
     private RecyclerView addressbook_re;
     //联系人的适配器
     private AddressBookAdapter addressBookAdapter;
@@ -84,6 +69,7 @@ public class PhoneActivity extends UserActivity {
         addressbook_list = findViewById(R.id.addressbook_list);
         phone_titlebar = (TitleBar) findViewById(R.id.phone_titlebar);
         phone_search = (SearchView) findViewById(R.id.phone_search);
+        //TITLE的左方图片的点击事件
         ImageView imageView_left = phone_titlebar.getImageView_left();
         imageView_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,70 +77,13 @@ public class PhoneActivity extends UserActivity {
                 finish();
             }
         });
-        //设置布局样式
-        addressbook_re.setLayoutManager(new LinearLayoutManager(this));
-        //实例化适配器
-        addressBookAdapter = new AddressBookAdapter(list);
-        //设置适配器
-        addressbook_re.setAdapter(addressBookAdapter);
-        initphone();
-        //适配的点击事件
-        addressBookAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                int id = view.getId();
-                if(id==R.id.address_item_phone_jia){
-                    AddressBookBean addressBookBean = list.get(position);
-                    String phone = addressBookBean.getPhone();
-                    Log.i("lyj","添加好友");
-                    try {
-                        VCard vCard = VCardManager.getInstanceFor(XmppManager.getInstance().getConnection()).loadVCard(JidCreate.entityBareFrom(phone));
-                        Log.i("lyj","添加好友+v"+vCard.toString());
-                        if (vCard!=null){
-                            view.setVisibility(View.GONE);
-                            //IM添加好友
-                            IXmppFriend xmppFriendManager = XmppManager.getInstance().getXmppFriendManager();
-                            xmppFriendManager.addFriend(phone+"@"+XmppManager.getInstance().getXmppConfig().getDomainName(), phone);
-                            Toast.makeText(PhoneActivity.this, "添加好友成功", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(PhoneActivity.this, AddActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(PhoneActivity.this, "好友还未注册", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (SmackException.NoResponseException e) {
-                        e.printStackTrace();
-                    } catch (XMPPException.XMPPErrorException e) {
-                        e.printStackTrace();
-                    } catch (SmackException.NotConnectedException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (XmppStringprepException e) {
-                        e.printStackTrace();
-                    }
-
-
-//                    Intent intent = new Intent(PhoneActivity.this, RegisterActivity.class);
-//                    intent.putExtra("zh",phone);
-//                    startActivity(intent);
-
-//                    presenter.getredata(phone,"123");
-//                    ThreadUtils.getInstance().getExecutorService().execute(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            XmppManager.getInstance()
-//                                    .getXmppUserManager()
-//                                    .createAccount(phone,"123");
-//                            Intent intent = new Intent(RegisterActivity.this, SelectActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    });
-
-                }
-            }
-        });
-        addressBookAdapter.notifyDataSetChanged();
+        //联系人加好友
+        phone_re();
         //搜索框
+        phone_search_listener();
+    }
+
+    private void phone_search_listener() {
         phone_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -176,6 +105,74 @@ public class PhoneActivity extends UserActivity {
                 return false;
             }
         });
+        Log.i("lyj","当前数据："+addressbook_all.size());
+        list=addressbook_all;
+        addressBookAdapter.notifyDataSetChanged();
+    }
+
+    private void phone_re() {
+        //设置布局样式
+        addressbook_re.setLayoutManager(new LinearLayoutManager(this));
+        //实例化适配器
+        addressBookAdapter = new AddressBookAdapter(list);
+        //设置适配器
+        addressbook_re.setAdapter(addressBookAdapter);
+        initphone();
+        //适配的点击事件
+        addressBookAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                int id = view.getId();
+                if(id==R.id.address_item_phone_jia){
+                    AddressBookBean addressBookBean = list.get(position);
+                    String phone = addressBookBean.getPhone();
+                    Log.i("lyj","添加好友");
+                    view.setVisibility(View.GONE);
+//                    try {
+//                        VCard vCard = VCardManager.getInstanceFor(XmppManager.getInstance().getConnection()).loadVCard(JidCreate.entityBareFrom(phone));
+//                        Log.i("lyj","添加好友+v"+vCard.toString());
+//                        if (vCard!=null){
+//                            //IM添加好友
+//                            IXmppFriend xmppFriendManager = XmppManager.getInstance().getXmppFriendManager();
+//                            xmppFriendManager.addFriend(phone+"@"+XmppManager.getInstance().getXmppConfig().getDomainName(), phone);
+//                            Toast.makeText(PhoneActivity.this, "添加好友成功", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(PhoneActivity.this, AddActivity.class);
+//                            startActivity(intent);
+//                        }else {
+//                            Toast.makeText(PhoneActivity.this, "好友还未注册", Toast.LENGTH_SHORT).show();
+//                        }
+//                    } catch (SmackException.NoResponseException e) {
+//                        e.printStackTrace();
+//                    } catch (XMPPException.XMPPErrorException e) {
+//                        e.printStackTrace();
+//                    } catch (SmackException.NotConnectedException e) {
+//                        e.printStackTrace();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    } catch (XmppStringprepException e) {
+//                        e.printStackTrace();
+//                    }
+
+
+//                    Intent intent = new Intent(PhoneActivity.this, RegisterActivity.class);
+//                    intent.putExtra("zh",phone);
+//                    startActivity(intent);
+
+//                    presenter.getredata(phone,"123");
+//                    ThreadUtils.getInstance().getExecutorService().execute(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            XmppManager.getInstance()
+//                                    .getXmppUserManager()
+//                                    .createAccount(phone,"123");
+//                            Intent intent = new Intent(RegisterActivity.this, SelectActivity.class);
+//                            startActivity(intent);
+//                        }
+//                    });
+                }
+            }
+        });
+        addressBookAdapter.notifyDataSetChanged();
     }
 
     private void initphone() {
@@ -208,6 +205,8 @@ public class PhoneActivity extends UserActivity {
         }
         //更新适配器
         addressBookAdapter.notifyDataSetChanged();
+        addressbook_all=list;
+        Log.i("lyj","当前数据："+addressbook_all.size());
         initListView();
     }
 

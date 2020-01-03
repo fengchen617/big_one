@@ -60,6 +60,7 @@ public class RegisterActivity extends UserActivity {
                                 .createAccount(register_ex_name.getText().toString(), register_ex_poss.getText().toString());
                         Intent intent = new Intent(RegisterActivity.this, SelectActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.guo,R.anim.guo);
                     }
                 });
             }

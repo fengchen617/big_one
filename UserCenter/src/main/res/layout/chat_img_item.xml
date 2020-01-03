@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <ImageView
+        android:id="@+id/chat_yuying"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/chat_yuying"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/chat_img"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/chat_img"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/chat_carmer"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/chat_xingji"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/chat_dingwei"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/chat_dingwei"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/chat_biaoqing"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/chat_biaoqing"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/chat_more"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/chat_more"
+        android:layout_height="match_parent"/>
+</LinearLayout>

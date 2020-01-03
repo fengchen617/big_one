@@ -6,6 +6,7 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.library.ZXing3;
 
 /**
  * @author fengchen
@@ -21,6 +22,8 @@ public class App extends Application {
         ARouter.init(this);
         ARouter.openDebug();
         ARouter.openLog();
+        //ZXing —— 二维码的初始化
+        ZXing3.init(this);
         //分割Dex
         MultiDex.install(this);
     }

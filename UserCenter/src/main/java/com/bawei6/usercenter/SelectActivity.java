@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,7 +20,9 @@ import androidx.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bawei6.baseclass.Utils.ThreadUtils;
-import com.bawei6.usercenter.chat.AddActivity;
+import com.bawei6.baseclass.bean.UserInfoBean;
+import com.bawei6.usercenter.bean.LoginBean;
+import com.bawei6.usercenter.msg.add.AddressBook_Activity;
 import com.bawei6.usercenter.inituser.FindActivity;
 import com.bawei6.usercenter.inituser.RegisterActivity;
 import com.bawei6.usercenter.inituser.UserActivity;
@@ -104,6 +107,7 @@ public class SelectActivity extends UserActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectActivity.this, FindActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.guo,R.anim.guo);
             }
         });
     }
@@ -121,6 +125,7 @@ public class SelectActivity extends UserActivity {
                     intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                     startActivityForResult(intent, 101);
+                    overridePendingTransition(R.anim.guo,R.anim.guo);
                 }
             }
         });
@@ -132,6 +137,7 @@ public class SelectActivity extends UserActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.guo,R.anim.guo);
             }
         });
     }
@@ -141,12 +147,18 @@ public class SelectActivity extends UserActivity {
             @Override
             public void onClick(View v) {
                 if (isflag) {
-                    String username = sp.getString("username", "");
-                    String password = sp.getString("password", "");
-                    select_ex_username.setText(username);
-                    select_mm_password.setText(password);
-                    select_mima_remember.setChecked(true);
-                    login(username, password);
+                    String name = select_ex_username.getText().toString();
+                    String poss = select_mm_password.getText().toString();
+                    if(!name.equals(null) && !poss.equals(null)){
+                        login(name, poss);
+                    }else {
+                        String username = sp.getString("username", "");
+                        String password = sp.getString("password", "");
+                        select_ex_username.setText(username);
+                        select_mm_password.setText(password);
+                        select_mima_remember.setChecked(true);
+                        login(username, password);
+                    }
                 } else {
                     sp.edit().putBoolean("isflag", selected).apply();
                     final String user = select_ex_username.getText().toString();
@@ -169,8 +181,9 @@ public class SelectActivity extends UserActivity {
                         @Override
                         public void run() {
                             Toast.makeText(SelectActivity.this, "登录成功", Toast.LENGTH_LONG);
-                            Intent intent = new Intent(SelectActivity.this, AddActivity.class);
+                            Intent intent = new Intent(SelectActivity.this, AddressBook_Activity.class);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.guo,R.anim.guo);
                         }
                     });
                 } else {
@@ -198,4 +211,13 @@ public class SelectActivity extends UserActivity {
         }
     }
 
+    @Override
+    public void login_data(UserInfoBean<LoginBean> loginBeanUserInfoBean) {
+        super.login_data(loginBeanUserInfoBean);
+        String usercode = loginBeanUserInfoBean.getData().getUsercode();
+        Log.i("lyj","登陆后返回的usercode"+usercode);
+        if(usercode!=null){
+            sp.edit().putString("usercode",usercode).commit();
+        }
+    }
 }

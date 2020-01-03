@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".chat.AddActivity">
+    tools:context=".msg.add.AddActivity">
 
     <com.bawei6.baseclass.ui.TitleBar
         android:id="@+id/add_titlebar"

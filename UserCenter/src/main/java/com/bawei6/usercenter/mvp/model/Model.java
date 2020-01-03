@@ -3,11 +3,15 @@ package com.bawei6.usercenter.mvp.model;
 import com.bawei6.baseclass.bean.UserInfoBean;
 import com.bawei6.baseclass.net.RetrofitUtils;
 import com.bawei6.usercenter.api.RxApi;
+import com.bawei6.usercenter.bean.FindFriendBean;
 import com.bawei6.usercenter.bean.LoginBean;
 import com.bawei6.usercenter.bean.RegisterBean;
 import com.bawei6.usercenter.mvp.contract.Contract;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -35,6 +39,16 @@ public class Model implements Contract.Model {
     public void getmodelredata(String id,String phoneusername, String password, Observer<UserInfoBean<RegisterBean>> observer) {
         RetrofitUtils.getInstance().create(RxApi.class)
                 .re_ob(new RegisterBean(1,id,phoneusername,password,"1","1","1","1",8,"1","1",1,1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    @Override
+    public void getmodelfinddata(String usercode, Observer<UserInfoBean<List<FindFriendBean>>> observer) {
+        RetrofitUtils.getInstance()
+                .create(RxApi.class)
+                .ob_find(usercode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

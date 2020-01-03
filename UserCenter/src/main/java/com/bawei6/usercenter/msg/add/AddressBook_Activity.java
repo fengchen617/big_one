@@ -1,4 +1,4 @@
-package com.bawei6.usercenter.chat;
+package com.bawei6.usercenter.msg.add;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,11 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bawei6.baseclass.net.RetrofitUtils;
 import com.bawei6.baseclass.ui.BaseActivity;
 import com.bawei6.baseclass.ui.TitleBar;
 import com.bawei6.usercenter.R;
 import com.bawei6.usercenter.bean.AddressCommonBean;
-import com.bawei6.usercenter.chat.fragment.AddressBook_Fragment;
+import com.bawei6.usercenter.msg.add.fragment.AddressBook_Fragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -67,6 +66,7 @@ public class AddressBook_Activity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AddressBook_Activity.this, AddActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.guo,R.anim.guo);
             }
         });
     }

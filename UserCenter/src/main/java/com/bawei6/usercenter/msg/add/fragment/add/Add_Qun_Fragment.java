@@ -1,4 +1,4 @@
-package com.bawei6.usercenter.chat.fragment.add;
+package com.bawei6.usercenter.msg.add.fragment.add;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

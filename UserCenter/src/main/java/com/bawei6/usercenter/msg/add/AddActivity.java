@@ -1,16 +1,14 @@
-package com.bawei6.usercenter.chat;
+package com.bawei6.usercenter.msg.add;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bawei6.baseclass.ui.BaseActivity;
 import com.bawei6.baseclass.ui.TitleBar;
 import com.bawei6.usercenter.R;
 import com.bawei6.usercenter.bean.AddCommonBean;
-import com.bawei6.usercenter.chat.fragment.add.Add_Preson_Fragment;
-import com.bawei6.usercenter.chat.fragment.add.Add_Qun_Fragment;
+import com.bawei6.usercenter.msg.add.fragment.add.Add_Preson_Fragment;
+import com.bawei6.usercenter.msg.add.fragment.add.Add_Qun_Fragment;
+import com.bawei6.usercenter.inituser.UserActivity;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
  * @date 2019/12/31.
  * @description：添加的功能
  */
-public class AddActivity extends BaseActivity {
+public class AddActivity extends UserActivity {
     //页面的切换
     private ArrayList<CustomTabEntity> list_common = new ArrayList<>();
     private CommonTabLayout add_main_common;

@@ -27,4 +27,9 @@
         android:text="面对面加好友"
         android:drawableLeft="@drawable/add_friend"
         android:gravity="center_vertical"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_preson_re"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

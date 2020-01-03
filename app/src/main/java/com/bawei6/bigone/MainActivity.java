@@ -6,11 +6,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -27,10 +29,11 @@ import com.bawei6.bigone.custom.Custom_Bottom;
 import com.bawei6.bigone.time.TiemTextBean;
 import com.bawei6.bigone.time.TimeAdapter;
 import com.bawei6.usercenter.SelectActivity;
-import com.bawei6.usercenter.chat.AddressBook_Activity;
+import com.bawei6.usercenter.msg.add.AddressBook_Activity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.library.ZXing3;
 
 import java.util.ArrayList;
 
@@ -67,35 +70,57 @@ public class MainActivity extends BaseActivity {
     private RecyclerView main_time_re;
     private TextView main_time_text;
 
+    //
+    boolean ischun=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
         //定义了一个地图view
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法须覆写，虚拟机需要在很多情况下保存地图绘制的当前状态。
+        initView();
         //初始化地图控制器对象
+        initmap();
+    }
+    private void initmap() {
         AMap aMap = mapView.getMap();
         if (aMap == null) {
             aMap = mapView.getMap();
         }
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("LYJ","SDADASDSA");
+                if(ischun){
+                    main_bb.setVisibility(View.GONE);
+                    main_time_re.setVisibility(View.GONE);
+                    main_time_text.setVisibility(View.GONE);
+                    main_title_img.setVisibility(View.GONE);
+                    main_title_search.setVisibility(View.GONE);
+                    main_sao_img.setVisibility(View.GONE);
+                    ischun=false;
+                }else {
+                    main_bb.setVisibility(View.VISIBLE);
+                    main_time_re.setVisibility(View.VISIBLE);
+                    main_time_text.setVisibility(View.VISIBLE);
+                    main_title_img.setVisibility(View.VISIBLE);
+                    main_title_search.setVisibility(View.VISIBLE);
+                    main_sao_img.setVisibility(View.VISIBLE);
+                    ischun=true;
+                }
+            }
+        });
         //去掉地图右下角缩放按钮
         aMap.getUiSettings().setZoomControlsEnabled(false);
     }
-
     private void initView() {
         main_time_re = findViewById(R.id.main_time_re);
-        main_time_re.setLayoutManager(new LinearLayoutManager(this));
-        list.add(new TiemTextBean("第一次加载的第一个TextView", "第一次加载的第二个TextView", "第一次加载的第三个TextView"));
-        list.add(new TiemTextBean("第二次加载的第一个TextView", "第二次加载的第二个TextView", "第二次加载的第三个TextView"));
-        list.add(new TiemTextBean("第三次加载的第一个TextView", "第三次加载的第二个TextView", "第三次加载的第三个TextView"));
-
-        timeAdapter = new TimeAdapter(R.layout.time_item, list);
-        main_time_re.setAdapter(timeAdapter);
-        timeAdapter.notifyDataSetChanged();
         map = (MapView) findViewById(R.id.map);
         main_bb = (Custom_Bottom) findViewById(R.id.main_bb);
+        //时间轴
+        init_time();
         //主页图片的切换(自定义的)
         initimg();
         main_title_img = (ImageView) findViewById(R.id.main_title_img);
@@ -109,25 +134,46 @@ public class MainActivity extends BaseActivity {
         d_title_name = (TextView) findViewById(R.id.d_title_name);
         d_title_ex = (EditText) findViewById(R.id.d_title_ex);
         drawer_close = (ImageView) findViewById(R.id.drawer_close);
-
         //初始化抽屉中的控件
         init_drawer();
 
         main_time_text = (TextView) findViewById(R.id.main_time_text);
-        main_time_text.setOnClickListener(new View.OnClickListener() {
+        //时间轴的展开与缩小
+        isshow_time();
+        //扫描二维码
+        scan_two_code();
+    }
+    private void scan_two_code() {
+        main_sao_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(iftime){
-                   main_time_re.setVisibility(View.VISIBLE);
-                   iftime=false;
-               }else {
-                   main_time_re.setVisibility(View.GONE);
-                   iftime=true;
-               }
+                ZXing3.openCamera(MainActivity.this, 2);
             }
         });
     }
-
+    private void isshow_time() {
+        main_time_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(iftime){
+                    main_time_re.setVisibility(View.VISIBLE);
+                    iftime=false;
+                }else {
+                    main_time_re.setVisibility(View.GONE);
+                    iftime=true;
+                }
+            }
+        });
+    }
+    private void init_time() {
+        main_time_re.setLayoutManager(new LinearLayoutManager(this));
+        list.add(new TiemTextBean("第一次加载的第一个TextView", "第一次加载的第二个TextView", "第一次加载的第三个TextView"));
+        list.add(new TiemTextBean("第二次加载的第一个TextView", "第二次加载的第二个TextView", "第二次加载的第三个TextView"));
+        list.add(new TiemTextBean("第三次加载的第一个TextView", "第三次加载的第二个TextView", "第三次加载的第三个TextView"));
+        timeAdapter = new TimeAdapter(R.layout.time_item, list);
+        main_time_re.setAdapter(timeAdapter);
+        timeAdapter.notifyDataSetChanged();
+    }
     //抽屉中的
     private void init_drawer() {
         //加载头像
@@ -173,7 +219,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
     //初始化主页的TITLE
     private void init_title() {
         //加载头像
@@ -188,8 +233,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
-
     //主页图片的切换
     private void initimg() {
         final ImageView imageView_one = main_bb.getimg_one();
@@ -207,6 +250,7 @@ public class MainActivity extends BaseActivity {
                 imageView_one.setImageDrawable(drawable_);
                 Intent intent = new Intent(MainActivity.this, AddressBook_Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.guo,R.anim.guo);
             }
         });
 
@@ -250,7 +294,6 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -261,7 +304,9 @@ public class MainActivity extends BaseActivity {
                 Uri uri = data.getData();
                 main_title_img.setImageURI(uri);
             }
+        }else if (requestCode == 2) {
+            String dispose = ZXing3.dispose(data);
+            Toast.makeText(this, "" + dispose, Toast.LENGTH_SHORT).show();
         }
     }
-
 }

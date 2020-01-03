@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bawei6.usercenter">
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application>
-        <activity android:name=".chat.fragment.add.PhoneActivity"></activity>
-        <activity android:name=".chat.AddressBook_Activity" />
+        <activity android:name=".msg.chat.Chat_Settings_Activity"></activity>
+        <activity android:name=".msg.add.fragment.add.PhoneActivity" />
+        <activity android:name=".msg.add.AddressBook_Activity" />
         <activity android:name=".inituser.FindActivity" />
-        <activity android:name=".chat.AddActivity" />
+        <activity android:name=".msg.add.AddActivity" />
         <activity android:name=".inituser.RegisterActivity" />
         <activity android:name=".SelectActivity" />
+        <activity android:name=".msg.chat.ChatActivity" />
     </application>
 
 </manifest>

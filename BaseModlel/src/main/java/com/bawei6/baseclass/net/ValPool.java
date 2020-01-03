@@ -1,5 +1,7 @@
 package com.bawei6.baseclass.net;
 
+import java.util.ArrayList;
+
 /**
  * @author fengchen
  * @date 2019/12/28.
@@ -12,4 +14,5 @@ public class ValPool {
     public final static String LYJ="lyj";
     public final static String SQLITE_USER_DB="user";
     public final static String SQLITE_USER_TABLE_NAME="user_table";
+
 }
