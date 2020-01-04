@@ -2,6 +2,9 @@
 // 路由表自动加载插件
 //apply plugin: 'com.alibaba.arouter'
 buildscript {
+    ext{
+        ali='2.9.2'
+    }
     repositories {
         google()
         jcenter()
