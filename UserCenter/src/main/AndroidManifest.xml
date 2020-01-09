@@ -11,6 +11,19 @@
         <activity android:name=".inituser.RegisterActivity" />
         <activity android:name=".SelectActivity" />
         <activity android:name=".msg.chat.ChatActivity" />
+
+        <provider
+            android:authorities="com.bawei6.usercenter"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+        android:grantUriPermissions="true">
+
+        <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/pahts">
+        </meta-data>
+        </provider>
+
     </application>
 
 </manifest>

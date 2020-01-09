@@ -77,12 +77,12 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //定义了一个地图view
-        mapView = (MapView) findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);// 此方法须覆写，虚拟机需要在很多情况下保存地图绘制的当前状态。
+//        //定义了一个地图view
+//        mapView = (MapView) findViewById(R.id.map);
+//        mapView.onCreate(savedInstanceState);// 此方法须覆写，虚拟机需要在很多情况下保存地图绘制的当前状态。
         initView();
         //初始化地图控制器对象
-        initmap();
+//        initmap();
     }
     private void initmap() {
         AMap aMap = mapView.getMap();
@@ -92,7 +92,6 @@ public class MainActivity extends BaseActivity {
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("LYJ","SDADASDSA");
                 if(ischun){
                     main_bb.setVisibility(View.GONE);
                     main_time_re.setVisibility(View.GONE);
@@ -117,7 +116,7 @@ public class MainActivity extends BaseActivity {
     }
     private void initView() {
         main_time_re = findViewById(R.id.main_time_re);
-        map = (MapView) findViewById(R.id.map);
+//        map = (MapView) findViewById(R.id.map);
         main_bb = (Custom_Bottom) findViewById(R.id.main_bb);
         //时间轴
         init_time();

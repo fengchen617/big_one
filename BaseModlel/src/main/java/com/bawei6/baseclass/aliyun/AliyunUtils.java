@@ -16,18 +16,19 @@ import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.bawei6.baseclass.Utils.MyBaseUtils;
+import com.bawei6.baseclass.Utils.LogUtils;
 
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 /**
- * @author fengchen
- * @date 2020/1/4.
- * @description：阿里云的上传工具类
+ * Author:fengchen
+ * Date:2019-12-6
+ * Desc：阿里云OSS工具类
  */
 public class AliyunUtils {
+
     private static AliyunUtils instance = new AliyunUtils();
     private OSS oss;
 
@@ -44,14 +45,12 @@ public class AliyunUtils {
      * @param context
      */
     public void init(Context context) {
-
-        //if null , default will be init
         ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // connction time out default 15s
-        conf.setSocketTimeout(15 * 1000); // socket timeout，default 15s
-        conf.setMaxConcurrentRequest(5); // synchronous request number，default 5
-        conf.setMaxErrorRetry(2); // retry，default 2
-        OSSLog.enableLog(); //write local log file ,path is SDCard_path\OSSLog\logs.csv
+        conf.setConnectionTimeout(15 * 1000);
+        conf.setSocketTimeout(15 * 1000);
+        conf.setMaxConcurrentRequest(5);
+        conf.setMaxErrorRetry(2);
+        OSSLog.enableLog();
 
         OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(BaseConstant.ACCESS_KEY_ID, BaseConstant.ACCESS_KEY_SECRET);
 
@@ -65,37 +64,17 @@ public class AliyunUtils {
      * @param key           文件名称
      * @param localFilePath 本地文件类路径
      */
-    public void upload(String bucketName, String key, String localFilePath) {
+    public void upload(String bucketName, String key, String localFilePath, OSSCompletedCallback callback) {
         PutObjectRequest put = new PutObjectRequest(bucketName, key, localFilePath);
 
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                MyBaseUtils.log(totalSize+"");
+                LogUtils.d("PutObject "+ "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
 
-        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-            @Override
-            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                MyBaseUtils.log("totalSize");
-            }
-
-            @Override
-            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
-                // Request exception
-                if (clientExcepion != null) {
-                    // Local exception, such as a network exception
-                    clientExcepion.printStackTrace();
-                }
-                if (serviceException != null) {
-                    MyBaseUtils.log(""+serviceException.getErrorCode());
-                    MyBaseUtils.log(""+serviceException.getRequestId());
-                    MyBaseUtils.log(""+serviceException.getHostId());
-                    MyBaseUtils.log(""+serviceException.getRawMessage());
-                }
-            }
-        });
+        OSSAsyncTask task = oss.asyncPutObject(put,callback);
     }
 
     /**
@@ -131,9 +110,10 @@ public class AliyunUtils {
 
             @Override
             public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
-                MyBaseUtils.log("file download failed...");
+                LogUtils.e("file download failed...");
             }
         });
         getTask.waitUntilFinished();
+
     }
 }

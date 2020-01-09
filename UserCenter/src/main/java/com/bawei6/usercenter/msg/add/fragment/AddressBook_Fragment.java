@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bawei6.baseclass.Utils.BaseConstant;
 import com.bawei6.baseclass.bean.UserInfoBean;
 import com.bawei6.usercenter.R;
 import com.bawei6.usercenter.adapter.FindFriendAdapter;
@@ -61,6 +62,7 @@ public class AddressBook_Fragment extends Fragment implements Contract.View {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 int id = view.getId();
                 if(id==R.id.find_friend_item_text){
+                    BaseConstant.userName="123";
                     Intent intent = new Intent(getActivity(),ChatActivity.class);
                     startActivity(intent);
                 }
